@@ -25,13 +25,13 @@ TEST_CASE("Configurations cannot be read from invalid config file")
 TEST_CASE("Configurations cannot be read using empty key")
 {
     cfg::ConfigBase cfg_base = {std::filesystem::absolute(t_config_path)};
-    REQUIRE_THROWS_AS(cfg_base.get<double>(""), std::runtime_error);
+    REQUIRE_THROWS_AS(cfg_base.Get<double>(""), std::runtime_error);
 }
 
 TEST_CASE("Configurations cannot be read using invalid key")
 {
     cfg::ConfigBase cfg_base = {std::filesystem::absolute(t_config_path)};
-    REQUIRE_THROWS_AS(cfg_base.get<double>("invalid_key"), std::runtime_error);
+    REQUIRE_THROWS_AS(cfg_base.Get<double>("invalid_key"), std::runtime_error);
 }
 
 TEST_CASE("Configurations can be read from valid config file")
@@ -69,20 +69,20 @@ TEST_CASE("Configurations can be read from valid config file")
     std::string e_attr_name = "some name";
     bool e_attr_debug = true;
     // Validate simple configuration
-    REQUIRE(cfg_base.get<double>(PI) == e_val_map[PI]);
+    REQUIRE(cfg_base.Get<double>(PI) == e_val_map[PI]);
     // Validate single nested configuration
-    REQUIRE(cfg_base.get<std::string>(ATTRIBUTES_NAME) == e_attr_name);
-    REQUIRE(cfg_base.get<bool>(ATTRIBUTES_DEBUG) == e_attr_debug);
+    REQUIRE(cfg_base.Get<std::string>(ATTRIBUTES_NAME) == e_attr_name);
+    REQUIRE(cfg_base.Get<bool>(ATTRIBUTES_DEBUG) == e_attr_debug);
     // Validate vector configuration
-    REQUIRE(cfg_base.get<cfg::Vec3d>(ATTRIBUTES_POINT) == e_point_xyz);
-    REQUIRE(cfg_base.get<cfg::Vec3i>(ATTRIBUTES_RGB) == e_rgb);
-    REQUIRE(cfg_base.get<cfg::Vec3b>(ATTRIBUTES_FLAGS) == e_flags);
-    REQUIRE(cfg_base.get<cfg::Vec3Str>(ATTRIBUTES_NAMES) == e_names);
+    REQUIRE(cfg_base.Get<cfg::Vec3d>(ATTRIBUTES_POINT) == e_point_xyz);
+    REQUIRE(cfg_base.Get<cfg::Vec3i>(ATTRIBUTES_RGB) == e_rgb);
+    REQUIRE(cfg_base.Get<cfg::Vec3b>(ATTRIBUTES_FLAGS) == e_flags);
+    REQUIRE(cfg_base.Get<cfg::Vec3Str>(ATTRIBUTES_NAMES) == e_names);
     // Validate double nested configuration
-    REQUIRE(cfg_base.get<double>(ROAD_DIMS_LENGTH) == e_val_map[ROAD_DIMS_LENGTH]);
-    REQUIRE(cfg_base.get<double>(ROAD_DIMS_WIDTH) == e_val_map[ROAD_DIMS_WIDTH]);
-    REQUIRE(cfg_base.get<double>(ROAD_DIMS_HEIGHT) == e_val_map[ROAD_DIMS_HEIGHT]);
-    REQUIRE(cfg_base.get<double>(ROAD_COLOR_HUE) == e_val_map[ROAD_COLOR_HUE]);
-    REQUIRE(cfg_base.get<double>(ROAD_COLOR_SATURATION) == e_val_map[ROAD_COLOR_SATURATION]);
-    REQUIRE(cfg_base.get<double>(ROAD_COLOR_VALUE) == e_val_map[ROAD_COLOR_VALUE]);
+    REQUIRE(cfg_base.Get<double>(ROAD_DIMS_LENGTH) == e_val_map[ROAD_DIMS_LENGTH]);
+    REQUIRE(cfg_base.Get<double>(ROAD_DIMS_WIDTH) == e_val_map[ROAD_DIMS_WIDTH]);
+    REQUIRE(cfg_base.Get<double>(ROAD_DIMS_HEIGHT) == e_val_map[ROAD_DIMS_HEIGHT]);
+    REQUIRE(cfg_base.Get<double>(ROAD_COLOR_HUE) == e_val_map[ROAD_COLOR_HUE]);
+    REQUIRE(cfg_base.Get<double>(ROAD_COLOR_SATURATION) == e_val_map[ROAD_COLOR_SATURATION]);
+    REQUIRE(cfg_base.Get<double>(ROAD_COLOR_VALUE) == e_val_map[ROAD_COLOR_VALUE]);
 }

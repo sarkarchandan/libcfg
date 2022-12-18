@@ -74,7 +74,7 @@ namespace cfg
         /// @param key configuration key
         /// @return configuration value
         template <typename T>
-        T get(std::string const &key) const
+        T Get(std::string const &key) const
         {
             if (key.find(_default_delimiter) == std::string::npos)
             {
