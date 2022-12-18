@@ -1,0 +1,18 @@
+pi: 3.14159
+attributes:
+  name: "some name"
+  debug: true
+  point: [2.3, 5.2, 5.9]
+  rgb: [255, 255, 255]
+  flags: [true, false, true]
+  names: ["tom", "dick", "harry"]
+  
+road:
+  dims:
+    length: 50.
+    width: 12.
+    height: 5.1
+  color:
+    hue: 0.2
+    saturation: 0.2
+    value: 0.2
