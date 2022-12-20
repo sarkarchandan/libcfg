@@ -21,9 +21,13 @@ if(NOT yaml-cpp_POPULATED)
     add_subdirectory(${yaml-cpp_SOURCE_DIR} ${yaml-cpp_BINARY_DIR})
 endif()
 
+find_package(Boost 1.60 REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
+
 add_library(${PROJECT_NAME} INTERFACE)
 target_include_directories(${PROJECT_NAME} INTERFACE include)
 target_link_libraries(${PROJECT_NAME} INTERFACE yaml-cpp)
+target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
 target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
 
 option(BUILD_WITH_TESTS "Build with tests" ON)
