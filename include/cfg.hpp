@@ -6,6 +6,7 @@
 #include <queue>
 #include <filesystem>
 
+#include <boost/optional.hpp>
 #include <yaml-cpp/yaml.h>
 
 namespace cfg
@@ -59,7 +60,7 @@ namespace cfg
         {
             try
             {
-                _config = YAML::LoadFile(std::filesystem::absolute(_cfg_path));
+                _config = YAML::LoadFile(_cfg_path);
             }
             catch (const std::exception &e)
             {
@@ -74,21 +75,22 @@ namespace cfg
         /// @param key configuration key
         /// @return configuration value
         template <typename T>
-        T Get(std::string const &key) const
+        boost::optional<T> Get(std::string const &key) const
         {
             if (key.find(_default_delimiter) == std::string::npos)
             {
-                if (_config[key].IsNull())
+                if (!_config[key].IsDefined())
                 {
-                    throw std::runtime_error("config not found");
+                    return boost::none;
                 }
                 return _config[key].as<T>();
             }
             std::queue<std::string> _segments = parseConfig(key);
+            assert(!_segments.empty());
             YAML::Node val = fetch(_config, _segments);
-            if (val.IsNull())
+            if (!val.IsDefined())
             {
-                throw std::runtime_error("config not found");
+                return boost::none;
             }
             return val.as<T>();
         }
