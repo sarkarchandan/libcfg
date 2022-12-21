@@ -55,7 +55,6 @@ namespace cfg
             return fetch(node[_key_seg], _segments);
         }
 
-    public:
         /// @brief ConfigBase constructor
         explicit ConfigBase(std::filesystem::path const &_cfg_path)
             : _delimeter("_"), _path(_cfg_path)
@@ -63,9 +62,12 @@ namespace cfg
             _root = std::make_unique<YAML::Node>();
             *_root = YAML::LoadFile(_cfg_path);
         }
+
+    public:
         ConfigBase() = delete;
         ~ConfigBase() {}
 
+        /// @brief ConfigBase copy constructor
         ConfigBase(ConfigBase const &_other)
             : _delimeter(_other._delimeter), _path(_other._path)
         {
@@ -74,6 +76,7 @@ namespace cfg
             *_root = YAML::LoadFile(_path);
         }
 
+        /// @brief ConfigBase copy assignment operator overload
         ConfigBase operator=(ConfigBase const &_other)
         {
             if (*this == _other)
@@ -123,9 +126,13 @@ namespace cfg
             }
             return val.as<T>();
         }
+
+        /// @brief Specifies cfg::GetConfig_From as friend function to hide the cfg::ConfigBase constructor
+        /// and enforce cfg::GetConfig_From as api to instantiate cfg::ConfigBase.
+        friend boost::optional<cfg::ConfigBase> GetConfig_From(std::filesystem::path const &_abs_path);
     };
 
-    /// @brief Instantiates cfg::ConfigBase while encapsulating the error handling.
+    /// @brief API to instantiate cfg::ConfigBase.
     /// @param _abs_path absolute path to the config file
     /// @return optional cfg::ConfigBase
     boost::optional<cfg::ConfigBase> GetConfig_From(std::filesystem::path const &_abs_path)
