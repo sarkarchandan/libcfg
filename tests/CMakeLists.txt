@@ -16,6 +16,7 @@ FetchContent_MakeAvailable(Catch2)
 
 set(SOURCES
     cfg_test_basic.cpp
+    cfg_test_custom.cpp
 )
 
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)

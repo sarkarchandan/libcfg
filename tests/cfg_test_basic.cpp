@@ -26,7 +26,7 @@ TEST_CASE("config cannot be read using empty or invalid key")
     const std::string THIRD_LEVEL_INVALID_KEY = "road_color_invalid";
     const std::string ALL_LEVELS_INVALID = "all_levels_invalid";
     REQUIRE_FALSE(base.Get<double>(EMPTY_KEY).has_value());
-    REQUIRE_FALSE(base.Get<cfg::Vec3i>(SECOND_LEVEL_INVALID_KEY).has_value());
+    REQUIRE_FALSE(base.Get<cfg::Vec3I>(SECOND_LEVEL_INVALID_KEY).has_value());
     REQUIRE_FALSE(base.Get<double>(THIRD_LEVEL_INVALID_KEY).has_value());
     REQUIRE_FALSE(base.Get<int>(ALL_LEVELS_INVALID).has_value());
 }
@@ -58,8 +58,8 @@ TEST_CASE("config can be read from valid config file and keys")
         {ROAD_COLOR_SATURATION, 0.2},
         {ROAD_COLOR_VALUE, 0.2},
     };
-    cfg::Vec3d e_point_xyz = {2.3, 5.2, 5.9};
-    cfg::Vec3i e_rgb = {255, 255, 255};
+    cfg::Vec3D e_point_xyz = {2.3, 5.2, 5.9};
+    cfg::Vec3I e_rgb = {255, 255, 255};
     cfg::Vec3Str e_names = {"tom", "dick", "harry"};
     std::string e_attr_name = "some name";
     bool e_attr_debug = true;
@@ -85,10 +85,10 @@ TEST_CASE("config can be read from valid config file and keys")
     REQUIRE(base.Get<double>(ROAD_COLOR_VALUE).has_value());
     REQUIRE(base.Get<double>(ROAD_COLOR_VALUE).value() == e_val_map[ROAD_COLOR_VALUE]);
     // Validate vector configuration
-    REQUIRE(base.Get<cfg::Vec3d>(ATTRIBUTES_POINT).has_value());
-    REQUIRE(base.Get<cfg::Vec3d>(ATTRIBUTES_POINT).value() == e_point_xyz);
-    REQUIRE(base.Get<cfg::Vec3i>(ATTRIBUTES_RGB).has_value());
-    REQUIRE(base.Get<cfg::Vec3i>(ATTRIBUTES_RGB).value() == e_rgb);
+    REQUIRE(base.Get<cfg::Vec3D>(ATTRIBUTES_POINT).has_value());
+    REQUIRE(base.Get<cfg::Vec3D>(ATTRIBUTES_POINT).value() == e_point_xyz);
+    REQUIRE(base.Get<cfg::Vec3I>(ATTRIBUTES_RGB).has_value());
+    REQUIRE(base.Get<cfg::Vec3I>(ATTRIBUTES_RGB).value() == e_rgb);
     REQUIRE(base.Get<cfg::Vec3Str>(ATTRIBUTES_NAMES).has_value());
     REQUIRE(base.Get<cfg::Vec3Str>(ATTRIBUTES_NAMES).value() == e_names);
 }
