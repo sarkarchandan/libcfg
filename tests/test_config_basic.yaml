@@ -4,7 +4,6 @@ attributes:
   debug: true
   point: [2.3, 5.2, 5.9]
   rgb: [255, 255, 255]
-  flags: [true, false, true]
   names: ["tom", "dick", "harry"]
   
 road:

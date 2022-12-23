@@ -8,7 +8,7 @@
 
 // Path to config file needs to be adjusted keeping in mind that when we execute test from build dir that would be
 // the context of the executable binary.
-const std::filesystem::path t_config_path = "../../tests/test_config.yaml";
+const std::filesystem::path t_config_path = "../../tests/test_config_basic.yaml";
 
 TEST_CASE("config must be read from valid config file")
 {
@@ -40,7 +40,6 @@ TEST_CASE("config can be read from valid config file and keys")
     const std::string ATTRIBUTES_DEBUG = "attributes_debug";
     const std::string ATTRIBUTES_POINT = "attributes_point";
     const std::string ATTRIBUTES_RGB = "attributes_rgb";
-    const std::string ATTRIBUTES_FLAGS = "attributes_flags";
     const std::string ATTRIBUTES_NAMES = "attributes_names";
     const std::string ROAD_DIMS_LENGTH = "road_dims_length";
     const std::string ROAD_DIMS_WIDTH = "road_dims_width";
@@ -61,7 +60,6 @@ TEST_CASE("config can be read from valid config file and keys")
     };
     cfg::Vec3d e_point_xyz = {2.3, 5.2, 5.9};
     cfg::Vec3i e_rgb = {255, 255, 255};
-    cfg::Vec3b e_flags = {true, false, true};
     cfg::Vec3Str e_names = {"tom", "dick", "harry"};
     std::string e_attr_name = "some name";
     bool e_attr_debug = true;
@@ -91,8 +89,6 @@ TEST_CASE("config can be read from valid config file and keys")
     REQUIRE(base.Get<cfg::Vec3d>(ATTRIBUTES_POINT).value() == e_point_xyz);
     REQUIRE(base.Get<cfg::Vec3i>(ATTRIBUTES_RGB).has_value());
     REQUIRE(base.Get<cfg::Vec3i>(ATTRIBUTES_RGB).value() == e_rgb);
-    REQUIRE(base.Get<cfg::Vec3b>(ATTRIBUTES_FLAGS).has_value());
-    REQUIRE(base.Get<cfg::Vec3b>(ATTRIBUTES_FLAGS).value() == e_flags);
     REQUIRE(base.Get<cfg::Vec3Str>(ATTRIBUTES_NAMES).has_value());
     REQUIRE(base.Get<cfg::Vec3Str>(ATTRIBUTES_NAMES).value() == e_names);
 }
