@@ -9,7 +9,8 @@
 
 namespace cfg
 {
-    /// @brief Defines generic three element vector type
+    /// @brief Defines generic three element vector type. This is base type, which is in turn specialized to
+    /// create four separate concrete vector types.
     template <typename T>
     struct Vec3
     {
