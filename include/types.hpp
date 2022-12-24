@@ -108,8 +108,8 @@ namespace cfg
             : Vec<std::string, len>(std::vector<std::string>(len)) {}
     };
 
-    /// @brief Convenient type aliases for three-element vector types, commonly used to represent
-    /// RGB color, coordinates etc.
+    /// Convenient type aliases for three-element vector types, commonly used to represent
+    /// RGB color, coordinates, dimensions etc.
     using Vec3I = cfg::VecI<3>;
     using Vec3D = cfg::VecD<3>;
     using Vec3Str = cfg::VecStr<3>;

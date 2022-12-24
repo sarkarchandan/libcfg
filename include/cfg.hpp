@@ -141,19 +141,7 @@ namespace cfg
     /// malformed config file is provided.
     /// @param _abs_path absolute path to the config file
     /// @return optional cfg::ConfigBase
-    boost::optional<cfg::ConfigBase> GetConfig_From(std::filesystem::path const &_abs_path)
-    {
-        try
-        {
-            cfg::ConfigBase base = cfg::ConfigBase(_abs_path);
-            return base;
-        }
-        catch (YAML::BadFile const &bf)
-        {
-            std::cerr << bf.what() << '\n';
-            return boost::none;
-        }
-    }
+    boost::optional<cfg::ConfigBase> GetConfig_From(std::filesystem::path const &_abs_path);
 } // namespace cfg
 
 #endif // CFG_HPP

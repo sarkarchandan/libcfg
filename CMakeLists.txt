@@ -24,11 +24,15 @@ endif()
 find_package(Boost 1.60 REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
-add_library(${PROJECT_NAME} INTERFACE)
-target_include_directories(${PROJECT_NAME} INTERFACE include)
-target_link_libraries(${PROJECT_NAME} INTERFACE yaml-cpp)
+set(SOURCES
+    src/cfg.cpp
+)
+
+add_library(${PROJECT_NAME} STATIC ${SOURCES})
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+target_link_libraries(${PROJECT_NAME} PUBLIC yaml-cpp)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES})
-target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
+target_include_directories(${PROJECT_NAME} PUBLIC include)
 
 option(BUILD_WITH_TESTS "Build with tests" ON)
 if(BUILD_WITH_TESTS)
