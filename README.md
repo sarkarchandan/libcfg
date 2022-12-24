@@ -5,9 +5,9 @@
 This is a simple wrapper over [yaml-cpp](https://github.com/jbeder/yaml-cpp) library to implement a configuration 
 fetcher api. This implementation is primarily put together to integrate a simple and reusable mechanism for adding 
 configuration to other C++ applications. Hence, it has a reasonably smaller scope compared to full capabilities of 
-`yaml-cpp` and simpler api layer to instantiate the configuration fetcher `cfg::ConfigBase` and a 
+`yaml-cpp` and simpler api layer to instantiate the configuration fetcher engine `cfg::ConfigBase` and a 
 `cfg::ConfigBase::Get<T>` method to fetch configurations for a given key string. The key can refer to a root-level 
-configuration a configuration in an arbitrary depth for which individual level segments are assumed to be underscore(_) 
+configuration or a configuration in an arbitrary depth for which individual level segments are assumed to be dot(.) 
 separated. In this documentation we describe  the usage of the api and integration of the library with 
 [CMake](https://cmake.org/cmake/help/latest/). To get acquainted with the feature-rich `yaml-cpp` library please visit 
 [yaml-cpp](https://github.com/jbeder/yaml-cpp) and [yaml-cpp tutorials](https://github.com/jbeder/yaml-cpp/wiki/Tutorial).
@@ -62,9 +62,9 @@ road:
 
 In this file `pi` is a valid root-level key and it can be used as is to fetch corresponding value. However, to fetch 
 the boolean value for `debug` config item we need to combine it with the root-level key-segment `attributes` using 
-underscore(`_`) as delimiter. Hence, the combined key to fetch it would be `attributes_debug`. Other config items, 
-which are at the same level as `debug` can be fetched using similar combination of keys e.g., `attributes_rgb` or 
-`attributes_point` etc. This can be generalized for fetching config items for any arbitrary depths. Following are 
+dot(`.`) as delimiter. Hence, the combined key to fetch it would be `attributes.debug`. Other config items, 
+which are at the same level as `debug` can be fetched using similar combination of keys e.g., `attributes.rgb` or 
+`attributes.point` etc. This can be generalized for fetching config items for any arbitrary depths. Following are 
 some examples,
 
 - 
@@ -73,7 +73,7 @@ some examples,
         dims:
             length: 50.
     ```
-    should be fetched using `road_dims_length`.
+    should be fetched using `road.dims.length`.
 
 -
     ```yaml
@@ -84,7 +84,7 @@ some examples,
             ...
             saturation: 0.2
     ```
-    should be fetched using `road_color_saturation`.
+    should be fetched using `road.color.saturation`.
 
 Internally, the entire configuration file is represented with a tree structure and each config item therefore is a node. 
 The `cfg::ConfigBase` encapsulates implementation for parsing of combined key-segments and recursively fetching the 
@@ -93,7 +93,7 @@ exception, which might take place while fetching the config item and makes it av
 interface using `boost::optional<T>`.
 
 ```cpp
-const std::string ROAD_DIMS_WIDTH = "road_dims_width";
+const std::string ROAD_DIMS_WIDTH = "road.dims.width";
 if(base.Get<double>(ROAD_DIMS_WIDTH).has_value())
 {
     const double road_width = base.Get<double>(ROAD_DIMS_WIDTH).value();
@@ -105,7 +105,7 @@ power of `boost::optional` to set some default value, when the targeted config i
 
 ```cpp
 double some_default_val = 345.23;
-double expected_config_item = base.Get<double>("SOME_MISSING_CONFIG").get_value_or(some_default_val);
+double expected_config_item = base.Get<double>("SOME.MISSING.CONFIG").get_value_or(some_default_val);
 ```
 
 In the above example if the targeted config item can not be fetched we assign a default value to the config. We get 

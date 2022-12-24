@@ -69,7 +69,7 @@ SCENARIO("custom types can be used with sequence configurations")
 
         WHEN("a valid key for a custom uint8_t sequence is provided")
         {
-            const std::string SEQUENCES_U8S = "sequences_u8s";
+            const std::string SEQUENCES_U8S = "sequences.u8s";
             REQUIRE(base.Get<Vec3U8>(SEQUENCES_U8S).has_value());
             THEN("config value should be correctly fetched")
             {
@@ -79,7 +79,7 @@ SCENARIO("custom types can be used with sequence configurations")
         }
         WHEN("a valid key for a custom int32_t sequence is provided")
         {
-            const std::string SEQUENCES_I32S = "sequences_i32s";
+            const std::string SEQUENCES_I32S = "sequences.i32s";
             REQUIRE(base.Get<Vec2I32>(SEQUENCES_I32S).has_value());
             THEN("config value should be correctly fetched")
             {

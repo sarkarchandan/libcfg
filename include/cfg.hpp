@@ -23,7 +23,7 @@ namespace cfg
         /// @brief Parses combined key string into a queue of identifiers for individual levels in the
         /// hierarchical config structure. This is done depending on a delimiter separating the combined
         /// keys in a single string.
-        /// @example "road_color_saturation" => ["road" -> "color" -> "saturation"]
+        /// @example "road.color.saturation" => ["road" -> "color" -> "saturation"]
         std::queue<std::string> parseConfig(std::string const &_key) const
         {
             std::queue<std::string> buffer;
@@ -58,7 +58,7 @@ namespace cfg
         /// @brief Constructor. Defined as private because this can throw but we don't want to handle the error in
         /// here. Instead we want to call the constructor from api layer and wrap the error handling there.
         explicit ConfigBase(std::filesystem::path const &_cfg_path)
-            : _delimeter("_"), _path(_cfg_path)
+            : _delimeter("."), _path(_cfg_path)
         {
             _root = std::make_unique<YAML::Node>();
             *_root = YAML::LoadFile(_cfg_path);
@@ -105,7 +105,7 @@ namespace cfg
         }
 
         /// @brief Common accessor api for config values against specified key. Key could be a simple one referring
-        /// to a root-level configuration. It can also be a '_'-separated combination key-segments referring to a
+        /// to a root-level configuration. It can also be a dot '.'-separated combination key-segments referring to a
         /// hierarchical combination.
         /// @tparam T configuration value type
         /// @param key config key

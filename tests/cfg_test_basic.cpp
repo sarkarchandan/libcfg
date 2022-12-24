@@ -45,9 +45,9 @@ SCENARIO("config cannot be read using empty or invalid key")
         WHEN("invalid key is used")
         {
             const std::string FIRST_LEVEL_INVALID_KEY = "invalid";
-            const std::string SECOND_LEVEL_INVALID_KEY = "attributes_invalid";
-            const std::string THIRD_LEVEL_INVALID_KEY = "road_color_invalid";
-            const std::string ALL_LEVELS_INVALID = "all_levels_invalid";
+            const std::string SECOND_LEVEL_INVALID_KEY = "attributes.invalid";
+            const std::string THIRD_LEVEL_INVALID_KEY = "road.color.invalid";
+            const std::string ALL_LEVELS_INVALID = "all.levels.invalid";
             THEN("config value cannot be obtained")
             {
                 REQUIRE_FALSE(base.Get<cfg::Vec3I>(SECOND_LEVEL_INVALID_KEY).has_value());
@@ -66,7 +66,7 @@ SCENARIO("config cannot be read when value is malformed")
         const cfg::ConfigBase base = cfg::GetConfig_From(std::filesystem::absolute(t_config_path)).value();
         WHEN("value is malformed")
         {
-            const std::string ERROR_MALFORMED = "error_malformed";
+            const std::string ERROR_MALFORMED = "error.malformed";
             THEN("config can not be obtained")
             {
                 REQUIRE_FALSE(base.Get<cfg::Vec3I>(ERROR_MALFORMED).has_value());
@@ -85,17 +85,17 @@ SCENARIO("config can be read from valid config file and keys")
         {
             // Define test key configurations
             const std::string PI = "pi";
-            const std::string ATTRIBUTES_NAME = "attributes_name";
-            const std::string ATTRIBUTES_DEBUG = "attributes_debug";
-            const std::string ATTRIBUTES_POINT = "attributes_point";
-            const std::string ATTRIBUTES_RGB = "attributes_rgb";
-            const std::string ATTRIBUTES_NAMES = "attributes_names";
-            const std::string ROAD_DIMS_LENGTH = "road_dims_length";
-            const std::string ROAD_DIMS_WIDTH = "road_dims_width";
-            const std::string ROAD_DIMS_HEIGHT = "road_dims_height";
-            const std::string ROAD_COLOR_HUE = "road_color_hue";
-            const std::string ROAD_COLOR_SATURATION = "road_color_saturation";
-            const std::string ROAD_COLOR_VALUE = "road_color_value";
+            const std::string ATTRIBUTES_NAME = "attributes.name";
+            const std::string ATTRIBUTES_DEBUG = "attributes.debug";
+            const std::string ATTRIBUTES_POINT = "attributes.point";
+            const std::string ATTRIBUTES_RGB = "attributes.rgb";
+            const std::string ATTRIBUTES_NAMES = "attributes.names";
+            const std::string ROAD_DIMS_LENGTH = "road.dims.length";
+            const std::string ROAD_DIMS_WIDTH = "road.dims.width";
+            const std::string ROAD_DIMS_HEIGHT = "road.dims.height";
+            const std::string ROAD_COLOR_HUE = "road.color.hue";
+            const std::string ROAD_COLOR_SATURATION = "road.color.saturation";
+            const std::string ROAD_COLOR_VALUE = "road.color.value";
             THEN("config value can be obtained")
             {
                 // Define test values
