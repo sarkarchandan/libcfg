@@ -113,23 +113,31 @@ namespace cfg
         template <typename T>
         boost::optional<T> Get(std::string const &key) const
         {
-            if (key.find(_delimeter) == std::string::npos)
+            try
             {
-                if (!(*_root)[key].IsDefined() || (*_root).IsNull())
+                if (key.find(_delimeter) == std::string::npos)
+                {
+                    if (!(*_root)[key].IsDefined() || (*_root).IsNull())
+                    {
+                        return boost::none;
+                    }
+                    return (*_root)[key].as<T>();
+                }
+                std::queue<std::string> _segments = parseConfig(key);
+                // At this point key segments must not be empty
+                assert(!_segments.empty());
+                YAML::Node val = fetch((*_root), _segments);
+                if (!val.IsDefined() || val.IsNull())
                 {
                     return boost::none;
                 }
-                return (*_root)[key].as<T>();
+                return val.as<T>();
             }
-            std::queue<std::string> _segments = parseConfig(key);
-            // At this point key segments must not be empty
-            assert(!_segments.empty());
-            YAML::Node val = fetch((*_root), _segments);
-            if (!val.IsDefined() || val.IsNull())
+            catch (YAML::BadConversion const &bc)
             {
+                std::cerr << bc.what() << '\n';
                 return boost::none;
             }
-            return val.as<T>();
         }
 
         /// @brief Specifies cfg::GetConfig_From as friend function to hide the main constructor and enforce
