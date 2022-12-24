@@ -1,5 +1,7 @@
 # libcfg
 
+![Build & Test](https://github.com/sarkarchandan/libcfg/actions/workflows/c-cpp.yml/badge.svg)
+
 This is a simple wrapper over [yaml-cpp](https://github.com/jbeder/yaml-cpp) library to implement a configuration 
 fetcher api. This implementation is primarily put together to integrate a simple and reusable mechanism for adding 
 configuration to other C++ applications. Hence, it has a reasonably smaller scope compared to full capabilities of 
@@ -112,3 +114,6 @@ this utility out of the box from `boost::optional`.
 ### Handling Sequences
 
 
+GitHub CI Setup Notes:
+* Boost: https://github.com/MarkusJx/install-boost
+* CMake CI: https://github.com/cristianadam/HelloWorld
