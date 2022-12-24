@@ -11,7 +11,6 @@ separated. In this documentation we describe  the usage of the api and integrati
 [yaml-cpp](https://github.com/jbeder/yaml-cpp) and [yaml-cpp tutorials](https://github.com/jbeder/yaml-cpp/wiki/Tutorial).
 
 ## API
----
 
 The main engine of the api is `cfg::ConfigBase` which can be instantiated using an absolute path to a YAML config file. 
 Instantiation may fail with runtime error if an invalid path is provided. Therefore, it is instantiated using api layer 
