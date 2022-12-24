@@ -41,13 +41,11 @@ jobs:
           COMMAND chmod +x ${cmake_dir}/cmake
         )
     - name: Install Boost
-      shell: cmake -P {0}
       uses: MarkusJx/install-boost@v2.4.3
       id: install-boost
       with:
         boost_version: 1.74.0
         toolset: gcc
-
     - name: Configure
       shell: cmake -P {0}
       run: |
