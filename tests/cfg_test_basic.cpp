@@ -58,6 +58,23 @@ SCENARIO("config cannot be read using empty or invalid key")
     }
 }
 
+SCENARIO("config cannot be read when value is malformed")
+{
+    GIVEN("a config base api obtained from valid file path")
+    {
+        const std::filesystem::path t_config_path = "../../tests/test_config_basic.yaml";
+        const cfg::ConfigBase base = cfg::GetConfig_From(std::filesystem::absolute(t_config_path)).value();
+        WHEN("value is malformed")
+        {
+            const std::string ERROR_MALFORMED = "error_malformed";
+            THEN("config can not be obtained")
+            {
+                REQUIRE_FALSE(base.Get<cfg::Vec3I>(ERROR_MALFORMED).has_value());
+            }
+        }
+    }
+}
+
 SCENARIO("config can be read from valid config file and keys")
 {
     GIVEN("a config base api obtained from valid file path")
@@ -91,11 +108,11 @@ SCENARIO("config can be read from valid config file and keys")
                     {ROAD_COLOR_SATURATION, 0.2},
                     {ROAD_COLOR_VALUE, 0.2},
                 };
-                cfg::Vec3D e_point_xyz = {2.3, 5.2, 5.9};
-                cfg::Vec3I e_rgb = {255, 255, 255};
-                cfg::Vec3Str e_names = {"tom", "dick", "harry"};
-                std::string e_attr_name = "some name";
-                bool e_attr_debug = true;
+                const cfg::Vec3D e_point_xyz = {2.3, 5.2, 5.9};
+                const cfg::Vec3I e_rgb = {255, 255, 255};
+                const cfg::Vec3Str e_names = {"tom", "dick", "harry"};
+                const std::string e_attr_name = "some name";
+                const bool e_attr_debug = true;
                 // Validate simple non-nested configuration
                 REQUIRE(base.Get<double>(PI).has_value());
                 REQUIRE(base.Get<double>(PI).value() == e_val_map[PI]);
