@@ -21,7 +21,7 @@ if(NOT yaml-cpp_POPULATED)
     add_subdirectory(${yaml-cpp_SOURCE_DIR} ${yaml-cpp_BINARY_DIR})
 endif()
 
-find_package(Boost 1.60 REQUIRED)
+find_package(Boost 1.74 REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
 set(SOURCES
