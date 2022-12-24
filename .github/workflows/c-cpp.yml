@@ -37,8 +37,14 @@ jobs:
         set(path_separator ":")
         file(APPEND "$ENV{GITHUB_PATH}" "$ENV{GITHUB_WORKSPACE}${path_separator}${cmake_dir}")
         execute_process(
-            COMMAND chmod +x ninja
-            COMMAND chmod +x ${cmake_dir}/cmake
+          COMMAND chmod +x ninja
+          COMMAND chmod +x ${cmake_dir}/cmake
+        )
+    - name: Install Boost
+      shell: cmake -P {0}
+      run: |
+        execute_process(
+          COMMAND apt install libboost-all-dev
         )
     - name: Configure
       shell: cmake -P {0}
