@@ -200,9 +200,70 @@ the exposed interface and currently outside the scope of this library.
 
 ## Integration with CMake
 
-...
+The library should be integrated to the applications using [CMake](https://cmake.org/cmake/help/latest/). For the time 
+being the CMake integration has a challenge concerning tests. In this note we describe the integration, challenge and 
+the workaround for the same. With an upcoming version, this challenge would be mitigated and more options for integration 
+would be implemented.
 
-## Acknowledgement of Helpful Resources
+### Using FetchContent
+[FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html) is a CMake module, which facilitates content 
+population during configure time. This module relies upon few key components.
+
+- [FetchContent_Declare](https://cmake.org/cmake/help/latest/module/FetchContent.html#command:fetchcontent_declare) 
+function specifies the source of the content with well-documented customization options.
+- [FetchContent_MakeAvailable](https://cmake.org/cmake/help/latest/module/FetchContent.html#command:fetchcontent_makeavailable) and 
+[FetchContent_Populate](https://cmake.org/cmake/help/latest/module/FetchContent.html#command:fetchcontent_populate) functions, 
+both of which ensure the population of the content. While the former is simpler and often preferable, later provides 
+more customization options for content population.
+
+Following is an example of integrating the library using FetchContent.
+
+```cmake
+include(FetchContent)
+
+FetchContent_Declare (
+    libcfg
+    GIT_REPOSITORY https://github.com/sarkarchandan/libcfg.git
+)
+
+FetchContent_MakeAvailable(libcfg)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE libcfg)
+```
+
+### Challenge
+
+With our current method of adding tests, integrating the library using FetchContent in the aforementioned manner poses a 
+challenge, especially when we have more tests to execute in the target application, to which we are linking the library. 
+When using `CTest` for running tests in the target applications it includes the library test target as well. Since, the 
+library tests rely on specific filepaths they would fail if not specifically discarded, while running the tests in the 
+target application. This is an avoidable overhead.
+
+While we are refactoring the tests to mitigate this issue following is a workaround to discard the library tests in the 
+target application. Although not ideal, this can help isolating (and ignoring) the library tests from the tests in the 
+target application. We can add a file `CTestCustom.cmake` in our source tree of the target application,
+
+```cmake
+# CTestCustom.cmake
+set(CTEST_CUSTOM_TESTS_IGNORE
+    "Scenario: config must be read from valid config file"
+    "Scenario: config cannot be read using empty or invalid key"
+    "Scenario: config cannot be read when value is malformed"
+    "Scenario: config can be read from valid config file and keys"
+    "Scenario: custom types can be used with sequence configurations"
+)
+```
+
+and add the custom CTest configuration at the CMakeLists.txt file.
+
+```cmake
+configure_file(${CMAKE_SOURCE_DIR}/CTestCustom.cmake ${CMAKE_BINARY_DIR})
+```
+
+> This is not an ideal workaround because it needs us to specifically know, which library tests to ignore. Hence, we would 
+try to mitigate this challenge and present a cleaner way to integrate the library with an upcoming version.
+
+## Acknowledgement for Used References
 
 This is to acknowledge that this project is built on top of the following feature-rich open-source project(s).
 
@@ -213,4 +274,3 @@ It has referred to resources made available in following open-source project(s) 
 - [install-boost](https://github.com/MarkusJx/install-boost) - Install boost on Github actions.
 - [cmake-ci-setup](https://github.com/cristianadam/HelloWorld) - A C++ Hello World project, using CMake, and GitHub 
 Actions accompanied by a [helpful blog post](https://cristianadam.eu/20191222/using-github-actions-with-c-plus-plus-and-cmake/).
-
