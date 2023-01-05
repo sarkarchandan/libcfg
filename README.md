@@ -206,7 +206,7 @@ the exposed interface and currently outside the scope of this library.
 
 This is to acknowledge that this project is built on top of the following feature-rich open-source project(s).
 
-- [yaml-cpp](https://github.com/jbeder/yaml-cpp) - A YAML parser and emitter in C++.
+- [yaml-cpp](https://github.com/jbeder/yaml-cpp)-`0.7.0` - A YAML parser and emitter in C++.
 
 It has referred to resources made available in following open-source project(s) to setup continuos integration workflow.
 
