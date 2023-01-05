@@ -28,5 +28,5 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR}/include
 target_link_libraries(${PROJECT_NAME} libcfg)
 target_link_libraries(${PROJECT_NAME} Catch2::Catch2WithMain)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
-set_target_properties(${PROJECT_NAME} PROPERTIES EXCLUDE_FROM_ALL True)
+# set_target_properties(${PROJECT_NAME} PROPERTIES EXCLUDE_FROM_ALL True)
 catch_discover_tests(${PROJECT_NAME})
